@@ -49,7 +49,7 @@ def quadratic_function(x, a=0.4, b=-1.3, c=1.5):
     return a * x ** 2 + b * x + c
 
 
-def generate_data_polynomial(x1_data, x2_data, polynomial_function, filename="poynomial_data.pkl"):
+def generate_data_polynomial(x1_data, x2_data, polynomial_function, filename="polynomial_data.pkl"):
     """
     Generates binary data with two input features, according to some polynomial function.
 
@@ -77,9 +77,9 @@ if __name__ == "__main__":
     n_data_points = 100
     x1_data = np.random.uniform(0, 12, n_data_points)
     x2_data = np.random.uniform(0, 40, n_data_points)
-    w1 = 2.3
+    w1 = round(np.sqrt(223) ** 1.3 / 10 * 0.69, 1)  # "encrypted" value of step one of the exercises
     w2 = 0.4
-    b = -17
+    b = -int(np.sqrt(193) ** 1.3 * (1 / 1.4 ** 2) + 2)  # "encrypted" value for step one of exercises
     generate_data_simple(x1_data, x2_data, w1, w2, b)
 
     # Generate polynomial data
