@@ -32,7 +32,7 @@ def generate_data_simple(x1_data, x2_data, w1, w2, b, sd=0, filename="data.pkl")
         pickle.dump(data_dict, outfile)
 
 
-def quadratic_function(x, a=0.4, b=-1.3, c=1.5):
+def quadratic_function(x, a=-0.4, b=1.3, c=1):
     """
     Simple quadratic function. Used to generate data.
     Given a point and coefficient, returns the output y.
