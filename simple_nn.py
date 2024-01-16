@@ -213,12 +213,68 @@ def plot_predictions(x1_data, x2_data, y_data, w1, w2, b, ax=None, n_epochs=None
     if n_epochs is not None:
         title += f" after {n_epochs} epochs"
     ax.set_title(title)
-    ax.set_xlabel("Gjennomsnitts timer sollys")
-    ax.set_ylabel("Gjennomsnitts temperatur")
+    ax.set_xlabel("Gjennomsnittlig antall timer sollys")
+    ax.set_ylabel("Gjennomsnittstemperatur")
 
     if show:
         plt.show()
     return ax  # return the Axes object for further manipulation outside the function
+
+
+def plot_data(x1_data, x2_data, y_data, ax=None, filename=None,
+              xlabel=None, ylabel=None, include_legend=True, show=False):
+    """
+    Plots the data alone, without predictions
+
+    Args:
+        x1_data (list): List of x1-datapoints
+        x2_data (list): List of x2-datapoints
+        y_data (list): List of y-data points (true values).
+        ax (axis, optional): The axis to plot on. Will make a new one if it is `None`.
+        n_epochs (int, optional): If not None, will put the numbers of epochs used in the title.
+        xlabel (str): Name of the x-label.
+        ylabel (str): Name of the y-label.
+        include_legend (bool): If True, includes a legend.
+        show (bool, optional): If True, shows the plot. If False, returns the axis. Defaults to True.
+
+    Returns:
+        ax: The axis plotted on.
+    """
+    if ax is None:
+        _, ax = plt.subplots()
+
+    labels = ["Lønnsomt", "Ikke lønnsomt"]
+    # Plot the data in two batches
+    y_data = np.array(y_data)
+    for color, marker, mask, label in zip(["blue", "red"], ["o", "x"], [y_data == 1, y_data != 1], labels):
+        ax.scatter(x1_data[mask], x2_data[mask], color=color, marker=marker, alpha=0.7, label=label)
+
+    if xlabel is None:
+        xlabel = "Gjennomsnittlig antall timer sollys"
+    if ylabel is None:
+        ylabel = "Gjennomsnittstemperatur"
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    if include_legend:
+        ax.legend(loc="upper right")
+
+    if filename is not None:
+        plt.savefig(filename, bbox_inches="tight", pad_inches=0.1)
+    if show:
+        plt.show()
+    return ax  # return the Axes object for further manipulation outside the function
+
+
+def plot_sigmoid(filename="sigmoid_plot.png"):
+    """ plots the sigmoid function, for the presentation """
+    x_values = np.linspace(-8, 8, 1000)
+    y_values = sigmoid(x_values)
+    plt.plot(x_values, y_values, c="indigo")
+    plt.xlabel("z")
+    plt.ylabel("y")
+    plt.xticks(np.array([]))
+    plt.yticks(np.array([]))
+    plt.savefig(filename, bbox_inches="tight", pad_inches=0.1)
 
 
 def read_data(filename="data.pkl"):
